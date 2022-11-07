@@ -1,0 +1,10 @@
+[package]
+name = "bevy_glfw"
+version = "0.0.0"
+edition = "2021"
+description = "GLFW window backend for Bevy"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/Friz64/bevy_glfw"
+documentation = "https://docs.rs/bevy_glfw"
+
+[dependencies]
