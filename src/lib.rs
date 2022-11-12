@@ -5,7 +5,9 @@ use bevy::{
     app::AppExit,
     ecs::event::ManualEventReader,
     prelude::*,
-    window::{CreateWindow, ModifiesWindows, WindowClosed, WindowCommand, WindowCreated},
+    window::{
+        CreateWindow, ModifiesWindows, WindowClosed, WindowCommand, WindowCreated, WindowMode,
+    },
 };
 use glfw_bindgen::*;
 use glfw_windows::GlfwWindows;
@@ -152,7 +154,15 @@ fn change_window(
     for id in removed_windows {
         if windows.remove(id).is_some() {
             window_close_events.send(WindowClosed { id });
-            let _ = glfw_windows.windows.remove(&id);
+            let mut window = glfw_windows.windows.remove(&id).unwrap();
+            if !glfw_windows.windows.is_empty() {
+                unsafe {
+                    // glfwHideWindow only works on windowed windows
+                    window.set_window_mode(WindowMode::Windowed, UVec2::default());
+                    // HACK: glfwDestroyWindow may cause vkDestroySwapchain to deadlock
+                    glfwHideWindow(window.window);
+                }
+            }
         }
     }
 }
