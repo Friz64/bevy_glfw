@@ -5,7 +5,52 @@ GLFW window backend for Bevy
 [![crates.io](https://img.shields.io/crates/v/bevy_glfw)](https://crates.io/crates/bevy_glfw)
 [![docs.rs](https://docs.rs/bevy_glfw/badge.svg)](https://docs.rs/bevy_glfw)
 
-# WIP
+## Usage
+
+`Cargo.toml`
+```
+bevy = {
+    version = "...",
+    default-features = false, // <- Important 
+    features = [
+        // Only required features!
+        // Notably *not*:
+        // - "bevy_winit"
+        // - "x11" (also enables winit)
+        // - "wayland" (also enables winit)
+    ]
+}
+```
+
+---
+
+`main.rs`
+```
+use bevy::prelude::*;
+
+fn main() {
+    App::new()
+        .add_plugins(DefaultPlugins)
+        .add_plugin(bevy_glfw::GlfwPlugin) // <- Add the plugin as usual
+        .run();
+}
+```
+
+## Motivation
+
+Introducing a proper stop-gap solution until
+[winit#1806](https://github.com/rust-windowing/winit/issues/1806) is completed
+and released.
+
+## Bevy Version Support
+
+| bevy | bevy_glfw |
+| ---- | --------- |
+| 0.8  | 0.1       |
+
+## Credit
+
+- [Red Artist](https://github.com/coderedart) for the base code.
 
 ## License
 

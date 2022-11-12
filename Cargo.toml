@@ -1,6 +1,6 @@
 [package]
 name = "bevy_glfw"
-version = "0.0.0"
+version = "0.1.0"
 edition = "2021"
 description = "GLFW window backend for Bevy"
 license = "MIT OR Apache-2.0"
@@ -8,3 +8,15 @@ repository = "https://github.com/Friz64/bevy_glfw"
 documentation = "https://docs.rs/bevy_glfw"
 
 [dependencies]
+glfw-bindgen = { version = "0.1", features = ["wayland"] }
+bevy = { version = "0.8", default-features = false }
+raw-window-handle = "0.4"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+objc = "0.2"
+
+[dev-dependencies]
+bevy = { version = "0.8", default-features = false, features = [
+    "bevy_asset",
+    "render",
+] }
